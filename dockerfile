@@ -5,12 +5,13 @@ FROM base AS builder
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --production 
-RUN npm install vite @vitejs/plugin-react --save-dev
+COPY yarn.lock ./
+RUN yarn --production --frozen-lockfile
+RUN yarn add vite @vitejs/plugin-react
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:alpine
 
