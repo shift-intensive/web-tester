@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
-type TypographyVariant = 'title' | 'paragraph16_regular' | 'paragraph14_regular';
-type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'p';
+type TypographyVariant = 'paragraph14_regular' | 'paragraph16_regular' | 'title';
+type TypographyTag = 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 export type TypographyProps<Tag extends TypographyTag> = React.ComponentProps<Tag> & {
   variant: TypographyVariant;
   tag?: TypographyTag;

@@ -2,8 +2,8 @@ import React from 'react';
 
 interface UseCountdownParams {
   countStart: number;
-  interval?: number;
   enabled?: boolean;
+  interval?: number;
 }
 
 export const useCountdown = ({ interval = 1000, countStart }: UseCountdownParams) => {

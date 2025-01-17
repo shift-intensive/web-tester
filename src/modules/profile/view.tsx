@@ -15,7 +15,7 @@ export const ProfileView = () => {
         Профиль
       </Typography>
 
-      <fieldset disabled={state.isLoading} className={styles.fieldset}>
+      <fieldset className={styles.fieldset} disabled={state.isLoading}>
         <Input
           label='Фамилия'
           placeholder='Фамилия'
@@ -27,8 +27,8 @@ export const ProfileView = () => {
           disabled
           label='Номер телефона'
           value={state.phone}
-          format='+# ### ### ## ##'
           component={PatternFormat}
+          format='+# ### ### ## ##'
         />
 
         <Input
@@ -69,7 +69,7 @@ export const ProfileView = () => {
       </fieldset>
 
       <div className={styles.button_container}>
-        <Button type='submit' loading={state.isLoading} disabled={!form.formState.isDirty}>
+        <Button disabled={!form.formState.isDirty} type='submit' loading={state.isLoading}>
           Обновить данные
         </Button>
         <Button variant='outlined' onClick={functions.onLogout}>

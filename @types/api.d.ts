@@ -28,6 +28,6 @@ type RequestConfig<Params = undefined> = Params extends undefined
   : { params: Params; config?: ApiRequestConfig };
 
 interface BaseResponse {
-  success: boolean;
   reason?: string;
+  success: boolean;
 }

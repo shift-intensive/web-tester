@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   resolve: {
     alias: {
+      '@/api': path.resolve(__dirname, './generated/api'),
       '@': path.resolve(__dirname, './src')
     }
   },

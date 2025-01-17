@@ -6,8 +6,8 @@ import type { User } from '@/api/instance';
 interface StoreState {
   isLoggedIn: boolean;
   user: User;
-  setUser: (user: User) => void;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
+  setUser: (user: User) => void;
 }
 
 export const useStore = create<StoreState>()(

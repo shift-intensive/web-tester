@@ -1,4 +1,4 @@
-const { stylelint } = require('@siberiacancode/stylelint');
+import { stylelint } from '@siberiacancode/stylelint';
 
 /** @type {import('stylelint').Config} */
 module.exports = {

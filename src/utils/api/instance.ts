@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
+
 import axios from 'axios';
 
 import { LOCAL_STORAGE_KEYS } from '../constants';
@@ -15,3 +17,5 @@ api.interceptors.request.use((config) => {
   if (token) config.headers.authorization = `Bearer ${token}`;
   return config;
 });
+
+export const instance = <T>(config: AxiosRequestConfig) => api<T>(config);

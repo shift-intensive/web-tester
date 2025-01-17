@@ -24,35 +24,35 @@ export const AuthView = () => {
         </Typography>
 
         <Controller
-          name='phone'
-          control={form.control}
           render={({ field: { onChange, value, ...restField }, fieldState }) => (
             <Input
               {...restField}
-              placeholder='Телефон'
-              format='+7 ### ### ## ##'
-              component={PatternFormat}
               value={value.substring(1)}
+              component={PatternFormat}
+              format='+7 ### ### ## ##'
               onChange={(event) => onChange(event.target.value.replace('+', '').replace(/ /g, ''))}
+              placeholder='Телефон'
               {...(fieldState.error && { error: fieldState.error.message })}
               {...(value === '72282881488' && { error: 'нет это не пасхалка' })}
             />
           )}
+          name='phone'
+          control={form.control}
         />
 
         {state.stage === 'otp' && (
           <Controller
-            name='otp'
-            control={form.control}
             render={({ field, fieldState }) => (
               <Input
                 {...field}
                 component={PatternFormat}
-                placeholder='Проверочный код'
                 format='#######'
+                placeholder='Проверочный код'
                 {...(fieldState.error && { error: fieldState.error.message })}
               />
             )}
+            name='otp'
+            control={form.control}
           />
         )}
 
@@ -64,8 +64,8 @@ export const AuthView = () => {
           {state.stage === 'otp' && state.submittedPhones[state.phone] && (
             <Countdown
               endTime={state.submittedPhones[state.phone]}
-              onRetry={functions.onRetry}
               loading={state.isLoading}
+              onRetry={functions.onRetry}
             />
           )}
         </div>

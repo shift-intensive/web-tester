@@ -1,12 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import type { User } from '@/api/instance';
-import { useUsersControllerUpdateProfile } from '@/api/instance';
+import type { User } from '@/api';
+
+import { useUsersControllerUpdateProfile } from '@/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 import { useStore } from '@/utils/store';
 
 import type { ProfileFormScheme } from '../constants';
+
 import { profileFormScheme } from '../constants';
 
 export const useView = () => {

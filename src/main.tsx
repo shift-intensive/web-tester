@@ -1,10 +1,11 @@
 import ReactDOM from 'react-dom/client';
 
-import { usersControllerSession } from './api/instance';
-import { LOCAL_STORAGE_KEYS } from './utils/constants';
-import { useStore } from './utils/store';
+import { usersControllerSession } from '@/api';
+
 import { App } from './App';
 import { Provider } from './provider';
+import { LOCAL_STORAGE_KEYS } from './utils/constants';
+import { useStore } from './utils/store';
 
 import './styles/reset.css';
 import './styles/typography.css';

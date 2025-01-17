@@ -1,14 +1,14 @@
 export default {
   'shiftbackend-tester': {
-    input: 'https://shift-backend.onrender.com/tester-json',
+    input: 'http://shift-intensive.ru/api/tester-json',
     output: {
-      target: 'generated/api/instance.ts',
+      target: 'generated/api/index.ts',
       client: 'react-query',
       prettier: true,
       override: {
         mutator: {
           path: './src/utils/api/instance.ts',
-          name: 'api'
+          name: 'instance'
         }
       }
     }

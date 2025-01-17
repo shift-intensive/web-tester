@@ -1,20 +1,50 @@
 {
   "name": "shift-intensiv-tester",
-  "private": true,
-  "version": "1.0.0",
   "type": "module",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
-    "format": "prettier --write \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "pretty": "yarn format && yarn lint",
     "stylelint": "stylelint \"**/*.css\"",
-    "pretty": "yarn format && yarn lint --fix && yarn stylelint --fix",
+    "lint-inspector": "npx @eslint/config-inspector",
     "preview": "vite preview",
-    "generate-types": "orval --config ./orval.config.ts"
+    "generate-api": "orval --config ./orval.config.ts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@tanstack/react-query": "^5.64.1",
+    "@types/node": "^22.10.7",
+    "axios": "^1.7.9",
+    "clsx": "^2.1.1",
+    "generate-api": "^1.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "react-number-format": "^5.4.3",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@siberiacancode/eslint": "^2.7.0",
+    "@siberiacancode/prettier": "^1.2.0",
+    "@siberiacancode/stylelint": "^1.1.1",
+    "@tanstack/react-query-devtools": "5.64.1",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.1",
+    "orval": "^7.4.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
   },
   "lint-staged": {
     "*.css": [
+      "prettier --write",
       "stylelint --fix"
     ],
     "*.js": [
@@ -24,34 +54,5 @@
       "prettier --write",
       "eslint --no-error-on-unmatched-pattern --fix"
     ]
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
-    "@tanstack/react-query": "^5.29.2",
-    "@tanstack/react-query-devtools": "5.29.2",
-    "@types/node": "^20.12.7",
-    "axios": "^1.6.8",
-    "clsx": "^2.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.3",
-    "react-number-format": "^5.3.4",
-    "usehooks-ts": "^3.1.0",
-    "zod": "^3.22.4",
-    "zustand": "^4.5.2"
-  },
-  "devDependencies": {
-    "@siberiacancode/eslint": "^1.1.0",
-    "@siberiacancode/prettier": "^1.1.0",
-    "@siberiacancode/stylelint": "^1.0.2",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "orval": "^6.27.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
   }
 }

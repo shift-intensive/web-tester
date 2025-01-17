@@ -1,16 +1,17 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useOtpsControllerCreateOtp, useUsersControllerSignin } from '@/api/instance';
+import { useOtpsControllerCreateOtp, useUsersControllerSignin } from '@/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 import { useStore } from '@/utils/store';
 
 import type { OtpFormScheme, PhoneFormScheme } from '../constants';
+
 import { LENGTH, otpFormScheme, phoneFormScheme } from '../constants';
 
 export const useView = () => {
-  const [stage, setStage] = React.useState<'phone' | 'otp'>('phone');
+  const [stage, setStage] = React.useState<'otp' | 'phone'>('phone');
   const [submittedPhones, setSubmittedPhones] = React.useState<{
     [key: string]: number;
   }>({});

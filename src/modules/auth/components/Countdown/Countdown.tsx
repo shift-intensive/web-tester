@@ -26,13 +26,13 @@ export const Countdown = ({ endTime, onRetry, loading = false }: CountdownProps)
 
   if (!seconds)
     return (
-      <Button loading={loading} variant='text' onClick={onRetry}>
+      <Button variant='text' loading={loading} onClick={onRetry}>
         Запросить код ещё раз
       </Button>
     );
 
   return (
-    <Typography tag='p' variant='paragraph14_regular' className={styles.text}>
+    <Typography className={styles.text} tag='p' variant='paragraph14_regular'>
       Отправить код повторно через {seconds} секунд
     </Typography>
   );
