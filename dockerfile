@@ -5,7 +5,8 @@ FROM base AS builder
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --production
+RUN npm install --production 
+RUN npm install vite @vitejs/plugin-react --save-dev
 
 COPY . .
 
