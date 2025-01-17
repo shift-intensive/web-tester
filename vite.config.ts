@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/tester',
   resolve: {
     alias: {
       '@/api': path.resolve(__dirname, './generated/api'),
