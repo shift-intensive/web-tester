@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "husky",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --fix",
