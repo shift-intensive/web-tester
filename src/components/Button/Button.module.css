@@ -3,7 +3,7 @@
   height: 56px;
   padding: 16px 32px;
   border: 1px solid;
-  border-radius: 32px;
+  border-radius: 16px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -92,6 +92,7 @@
 }
 
 @keyframes spin {
+
   from {
     transform: rotate(0deg);
   }

@@ -1,7 +1,7 @@
 import { stylelint } from '@siberiacancode/stylelint';
 
 /** @type {import('stylelint').Config} */
-module.exports = {
+export default {
   ...stylelint,
   rules: {
     ...stylelint.rules,
