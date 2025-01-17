@@ -43,7 +43,7 @@ pipeline {
                     sh 'ssh -o "StrictHostKeyChecking=no" $SSH_USERNAME@$IP \
                         "sudo docker login ghcr.io -u $GITHUB_TOKEN_USR --password $GITHUB_TOKEN_PSW &&\
                         sudo docker rm -f shift-intensive-web-tester &&\
-                        sudo docker pull ghcr.io/shift-intensive/backend:latest &&\
+                        sudo docker pull ghcr.io/shift-intensive/web-tester:latest &&\
                         sudo docker run --restart=always --name shift-intensive-web-tester -d -p $PORT:80 -e PORT=80 --network shift-intensive ghcr.io/shift-intensive/backend:latest"'
                 }
             }
