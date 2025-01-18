@@ -1044,6 +1044,13 @@
   dependencies:
     prettier "^3.4.2"
 
+"@siberiacancode/reactuse@^0.0.78":
+  version "0.0.78"
+  resolved "https://registry.yarnpkg.com/@siberiacancode/reactuse/-/reactuse-0.0.78.tgz#8b5210e6daf0f7e4f9d1289a1edc399ee1d8e9c1"
+  integrity sha512-l/yShWyDNdAY6KXWAcIl6H07COhqBmUZ7SJNlItBydJCkaXENMrlMbPKBpZ3ax/Okk1JFDfs6oFK8jemeMB2FQ==
+  dependencies:
+    screenfull "^6.0.2"
+
 "@siberiacancode/stylelint@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@siberiacancode/stylelint/-/stylelint-1.1.1.tgz#59f74615915e1e93a0a3485d999960d55ad67a49"
@@ -5708,6 +5715,11 @@ scheduler@^0.23.2:
   integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
   dependencies:
     loose-envify "^1.1.0"
+
+screenfull@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-6.0.2.tgz#3dbe4b8c4f8f49fb8e33caa8f69d0bca730ab238"
+  integrity sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==
 
 scslre@^0.3.0:
   version "0.3.0"

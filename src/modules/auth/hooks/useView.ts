@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useDidUpdate } from '@siberiacancode/reactuse';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -27,14 +28,10 @@ export const useView = () => {
 
   const phone = authForm.watch('phone');
 
-  React.useEffect(() => {
-    if (phone.length < LENGTH.PHONE && !submittedPhones[phone]) return setStage('phone');
-  }, [phone]);
-
-  React.useEffect(() => {
-    if (submittedPhones[phone] > Date.now()) {
-      setStage('otp');
-    }
+  useDidUpdate(() => {
+    console.log('@ forbidden log', phone);
+    if (phone.length < LENGTH.PHONE || !submittedPhones[phone]) setStage('phone');
+    if (submittedPhones[phone] > Date.now()) setStage('otp');
   }, [phone]);
 
   const otpsControllerCreateOtpMutation = useOtpsControllerCreateOtp();
