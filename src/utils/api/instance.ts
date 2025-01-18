@@ -5,7 +5,7 @@ import axios from 'axios';
 import { LOCAL_STORAGE_KEYS } from '../constants';
 
 export const api = axios.create({
-  baseURL: 'http://shift-intensive.ru',
+  baseURL: 'https://shift-intensive.ru',
   validateStatus: () => true,
   headers: {
     tester: true
