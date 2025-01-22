@@ -10,15 +10,18 @@
   border: 1px solid var(--border-light);
   border-radius: 8px;
   background-color: var(--background-primary);
+  color: var(--text-primary);
   transition: all 0.2s ease-out;
 
   &:disabled {
     background-color: var(--background-disabled);
+    color: var(--text-tertiary);
     cursor: auto;
   }
 }
 
 .error {
+
   & input {
     border: 2px solid;
     border-color: var(--indicator-error);

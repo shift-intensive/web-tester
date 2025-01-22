@@ -3,7 +3,7 @@ import { useDidUpdate } from '@siberiacancode/reactuse';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useOtpsControllerCreateOtp, useUsersControllerSignin } from '@/api';
+import { useTesterControllerCreateOtp, useTesterControllerSignin } from '@/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 import { useStore } from '@/utils/store';
 
@@ -29,16 +29,15 @@ export const useView = () => {
   const phone = authForm.watch('phone');
 
   useDidUpdate(() => {
-    console.log('@ forbidden log', phone);
     if (phone.length < LENGTH.PHONE || !submittedPhones[phone]) setStage('phone');
     if (submittedPhones[phone] > Date.now()) setStage('otp');
   }, [phone]);
 
-  const otpsControllerCreateOtpMutation = useOtpsControllerCreateOtp();
-  const usersControllerSignin = useUsersControllerSignin();
+  const testerControllerCreateOtpMutation = useTesterControllerCreateOtp();
+  const testerControllerSigninMutation = useTesterControllerSignin();
 
   const sendOtp = async (phone: string) => {
-    const postAuthOptMutationResponse = await otpsControllerCreateOtpMutation.mutateAsync({
+    const postAuthOptMutationResponse = await testerControllerCreateOtpMutation.mutateAsync({
       data: { phone }
     });
 
@@ -56,7 +55,7 @@ export const useView = () => {
     }
 
     if (stage === 'otp' && 'otp' in values) {
-      const postUsersSinginMutationResponse = await usersControllerSignin.mutateAsync({
+      const postUsersSinginMutationResponse = await testerControllerSigninMutation.mutateAsync({
         data: { code: +values.otp, phone }
       });
 

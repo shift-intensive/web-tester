@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 
-import { usersControllerSession } from '@/api';
+import { testerControllerSession } from '@/api';
 
 import { App } from './App';
 import { Provider } from './provider';
@@ -14,8 +14,8 @@ import './styles/global.css';
 const init = async () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN);
   if (token) {
-    const getUsersSessionResponse = await usersControllerSession();
-    useStore.setState({ isLoggedIn: true, user: getUsersSessionResponse.data.user });
+    const getTesterControllerSession = await testerControllerSession();
+    useStore.setState({ isLoggedIn: true, user: getTesterControllerSession.data.user });
   }
 
   ReactDOM.createRoot(document.getElementById('root')!).render(

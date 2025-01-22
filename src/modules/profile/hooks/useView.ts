@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import type { User } from '@/api';
 
-import { useUsersControllerUpdateProfile } from '@/api';
+import { useTesterControllerUpdateProfile } from '@/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 import { useStore } from '@/utils/store';
 
@@ -14,7 +14,7 @@ import { profileFormScheme } from '../constants';
 export const useView = () => {
   const { user } = useStore();
 
-  const usersControllerUpdate = useUsersControllerUpdateProfile();
+  const testerControllerUpdateProfile = useTesterControllerUpdateProfile();
 
   const profileForm = useForm<ProfileFormScheme>({
     mode: 'onBlur',
@@ -23,7 +23,7 @@ export const useView = () => {
   });
 
   const onSubmit = profileForm.handleSubmit(async ({ middlename, ...values }) => {
-    await usersControllerUpdate.mutateAsync({
+    await testerControllerUpdateProfile.mutateAsync({
       data: { phone: user.phone, profile: values }
     });
   });

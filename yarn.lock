@@ -1037,6 +1037,11 @@
     eslint-plugin-react-hooks "5.1.0"
     eslint-plugin-react-refresh "0.4.18"
 
+"@siberiacancode/fetches@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@siberiacancode/fetches/-/fetches-1.7.1.tgz#038831bdb610e9bb0fe5faddfd8980b6b21db535"
+  integrity sha512-LGmIYbvhtAEZYoONA8YDxpaPHWkCMoZVMkrxMOAa5fcC0Gz/pFv8PqUtzoHYx348+yr1/McNM6/QdD9t7pnJDA==
+
 "@siberiacancode/prettier@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@siberiacancode/prettier/-/prettier-1.2.0.tgz#e46d478621555500f8a6f6aebaf6cabb2bea5fe3"

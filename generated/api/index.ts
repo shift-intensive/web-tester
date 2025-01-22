@@ -20,22 +20,35 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 import { instance } from '../../src/utils/api/instance';
-export interface SessionResponse {
+export interface SignInResponse {
   /** Статус запроса */
   success: boolean;
   /** Причина ошибки */
   reason?: string;
   /** Пользователь */
   user: User;
+  /** Пользовательский токен */
+  token: string;
 }
 
-export interface UpdateProfileResponse {
+export interface SignInDto {
+  /** Номер телефона */
+  phone: string;
+  /** Отп код */
+  code: number;
+}
+
+export interface OtpResponse {
   /** Статус запроса */
   success: boolean;
   /** Причина ошибки */
   reason?: string;
-  /** Пользователь */
-  user: User;
+  /** Время запроса повторного отп кода в мс */
+  retryDelay: number;
+}
+
+export interface CreateOtpDto {
+  phone: string;
 }
 
 export interface UpdateProfileProfileDto {
@@ -73,187 +86,142 @@ export interface User {
   city?: string;
 }
 
-export interface SignInResponse {
+export interface UpdateProfileResponse {
   /** Статус запроса */
   success: boolean;
   /** Причина ошибки */
   reason?: string;
   /** Пользователь */
   user: User;
-  /** Пользовательский токен */
-  token: string;
 }
 
-export interface SignInDto {
-  /** Номер телефона */
-  phone: string;
-  /** Отп код */
-  code: number;
-}
-
-export interface OtpResponse {
+export interface SessionResponse {
   /** Статус запроса */
   success: boolean;
   /** Причина ошибки */
   reason?: string;
-  /** Время запроса повторного отп кода в мс */
-  retryDelay: number;
-}
-
-export interface CreateOtpDto {
-  phone: string;
+  /** Пользователь */
+  user: User;
 }
 
 /**
- * @summary создание отп кода
+ * @summary получить сессию пользователя
  */
-export const otpsControllerCreateOtp = (createOtpDto: CreateOtpDto, signal?: AbortSignal) => {
-  return instance<OtpResponse>({
-    url: `/api/auth/otp`,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: createOtpDto,
-    signal
-  });
+export const testerControllerSession = (signal?: AbortSignal) => {
+  return instance<SessionResponse>({ url: `/api/tester/session`, method: 'GET', signal });
 };
 
-export const getOtpsControllerCreateOtpMutationOptions = <
-  TData = Awaited<ReturnType<typeof otpsControllerCreateOtp>>,
-  TError = unknown,
-  TContext = unknown
+export const getTesterControllerSessionQueryKey = () => {
+  return [`/api/tester/session`] as const;
+};
+
+export const getTesterControllerSessionQueryOptions = <
+  TData = Awaited<ReturnType<typeof testerControllerSession>>,
+  TError = unknown
 >(options?: {
-  mutation?: UseMutationOptions<TData, TError, { data: CreateOtpDto }, TContext>;
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>
+  >;
 }) => {
-  const mutationKey = ['otpsControllerCreateOtp'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
+  const { query: queryOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof otpsControllerCreateOtp>>,
-    { data: CreateOtpDto }
-  > = (props) => {
-    const { data } = props ?? {};
+  const queryKey = queryOptions?.queryKey ?? getTesterControllerSessionQueryKey();
 
-    return otpsControllerCreateOtp(data);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof testerControllerSession>>> = ({
+    signal
+  }) => testerControllerSession(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof testerControllerSession>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type TesterControllerSessionQueryResult = NonNullable<
+  Awaited<ReturnType<typeof testerControllerSession>>
+>;
+export type TesterControllerSessionQueryError = unknown;
+
+export function useTesterControllerSession<
+  TData = Awaited<ReturnType<typeof testerControllerSession>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTesterControllerSession<
+  TData = Awaited<ReturnType<typeof testerControllerSession>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof testerControllerSession>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useTesterControllerSession<
+  TData = Awaited<ReturnType<typeof testerControllerSession>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary получить сессию пользователя
+ */
+
+export function useTesterControllerSession<
+  TData = Awaited<ReturnType<typeof testerControllerSession>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof testerControllerSession>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getTesterControllerSessionQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
   };
 
-  return { mutationFn, ...mutationOptions } as UseMutationOptions<
-    TData,
-    TError,
-    { data: CreateOtpDto },
-    TContext
-  >;
-};
+  query.queryKey = queryOptions.queryKey;
 
-export type OtpsControllerCreateOtpMutationResult = NonNullable<
-  Awaited<ReturnType<typeof otpsControllerCreateOtp>>
->;
-export type OtpsControllerCreateOtpMutationBody = CreateOtpDto;
-export type OtpsControllerCreateOtpMutationError = unknown;
-
-/**
- * @summary создание отп кода
- */
-export const useOtpsControllerCreateOtp = <
-  TData = Awaited<ReturnType<typeof otpsControllerCreateOtp>>,
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<TData, TError, { data: CreateOtpDto }, TContext>;
-}): UseMutationResult<TData, TError, { data: CreateOtpDto }, TContext> => {
-  const mutationOptions = getOtpsControllerCreateOtpMutationOptions(options);
-
-  return useMutation(mutationOptions);
-};
-
-/**
- * @summary авторизация
- */
-export const usersControllerSignin = (signInDto: SignInDto, signal?: AbortSignal) => {
-  return instance<SignInResponse>({
-    url: `/api/users/signin`,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: signInDto,
-    signal
-  });
-};
-
-export const getUsersControllerSigninMutationOptions = <
-  TData = Awaited<ReturnType<typeof usersControllerSignin>>,
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<TData, TError, { data: SignInDto }, TContext>;
-}) => {
-  const mutationKey = ['usersControllerSignin'];
-  const { mutation: mutationOptions } = options
-    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey } };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof usersControllerSignin>>,
-    { data: SignInDto }
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return usersControllerSignin(data);
-  };
-
-  return { mutationFn, ...mutationOptions } as UseMutationOptions<
-    TData,
-    TError,
-    { data: SignInDto },
-    TContext
-  >;
-};
-
-export type UsersControllerSigninMutationResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerSignin>>
->;
-export type UsersControllerSigninMutationBody = SignInDto;
-export type UsersControllerSigninMutationError = unknown;
-
-/**
- * @summary авторизация
- */
-export const useUsersControllerSignin = <
-  TData = Awaited<ReturnType<typeof usersControllerSignin>>,
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<TData, TError, { data: SignInDto }, TContext>;
-}): UseMutationResult<TData, TError, { data: SignInDto }, TContext> => {
-  const mutationOptions = getUsersControllerSigninMutationOptions(options);
-
-  return useMutation(mutationOptions);
-};
+  return query;
+}
 
 /**
  * @summary обновить профиль пользователя
  */
-export const usersControllerUpdateProfile = (updateProfileDto: UpdateProfileDto) => {
+export const testerControllerUpdateProfile = (updateProfileDto: UpdateProfileDto) => {
   return instance<UpdateProfileResponse>({
-    url: `/api/users/profile`,
+    url: `/api/tester/profile`,
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     data: updateProfileDto
   });
 };
 
-export const getUsersControllerUpdateProfileMutationOptions = <
-  TData = Awaited<ReturnType<typeof usersControllerUpdateProfile>>,
+export const getTesterControllerUpdateProfileMutationOptions = <
+  TData = Awaited<ReturnType<typeof testerControllerUpdateProfile>>,
   TError = unknown,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<TData, TError, { data: UpdateProfileDto }, TContext>;
 }) => {
-  const mutationKey = ['usersControllerUpdateProfile'];
+  const mutationKey = ['testerControllerUpdateProfile'];
   const { mutation: mutationOptions } = options
     ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
       ? options
@@ -261,12 +229,12 @@ export const getUsersControllerUpdateProfileMutationOptions = <
     : { mutation: { mutationKey } };
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof usersControllerUpdateProfile>>,
+    Awaited<ReturnType<typeof testerControllerUpdateProfile>>,
     { data: UpdateProfileDto }
   > = (props) => {
     const { data } = props ?? {};
 
-    return usersControllerUpdateProfile(data);
+    return testerControllerUpdateProfile(data);
   };
 
   return { mutationFn, ...mutationOptions } as UseMutationOptions<
@@ -277,120 +245,152 @@ export const getUsersControllerUpdateProfileMutationOptions = <
   >;
 };
 
-export type UsersControllerUpdateProfileMutationResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerUpdateProfile>>
+export type TesterControllerUpdateProfileMutationResult = NonNullable<
+  Awaited<ReturnType<typeof testerControllerUpdateProfile>>
 >;
-export type UsersControllerUpdateProfileMutationBody = UpdateProfileDto;
-export type UsersControllerUpdateProfileMutationError = unknown;
+export type TesterControllerUpdateProfileMutationBody = UpdateProfileDto;
+export type TesterControllerUpdateProfileMutationError = unknown;
 
 /**
  * @summary обновить профиль пользователя
  */
-export const useUsersControllerUpdateProfile = <
-  TData = Awaited<ReturnType<typeof usersControllerUpdateProfile>>,
+export const useTesterControllerUpdateProfile = <
+  TData = Awaited<ReturnType<typeof testerControllerUpdateProfile>>,
   TError = unknown,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<TData, TError, { data: UpdateProfileDto }, TContext>;
 }): UseMutationResult<TData, TError, { data: UpdateProfileDto }, TContext> => {
-  const mutationOptions = getUsersControllerUpdateProfileMutationOptions(options);
+  const mutationOptions = getTesterControllerUpdateProfileMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
 
 /**
- * @summary получить сессию пользователя
+ * @summary создание отп кода
  */
-export const usersControllerSession = (signal?: AbortSignal) => {
-  return instance<SessionResponse>({ url: `/api/users/session`, method: 'GET', signal });
+export const testerControllerCreateOtp = (createOtpDto: CreateOtpDto, signal?: AbortSignal) => {
+  return instance<OtpResponse>({
+    url: `/api/tester/auth/otp`,
+    method: 'POST',
+    data: createOtpDto,
+    signal
+  });
 };
 
-export const getUsersControllerSessionQueryKey = () => {
-  return [`/api/users/session`] as const;
-};
-
-export const getUsersControllerSessionQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersControllerSession>>,
-  TError = unknown
+export const getTesterControllerCreateOtpMutationOptions = <
+  TData = Awaited<ReturnType<typeof testerControllerCreateOtp>>,
+  TError = unknown,
+  TContext = unknown
 >(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>
-  >;
+  mutation?: UseMutationOptions<TData, TError, { data: CreateOtpDto }, TContext>;
 }) => {
-  const { query: queryOptions } = options ?? {};
+  const mutationKey = ['testerControllerCreateOtp'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
 
-  const queryKey = queryOptions?.queryKey ?? getUsersControllerSessionQueryKey();
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof testerControllerCreateOtp>>,
+    { data: CreateOtpDto }
+  > = (props) => {
+    const { data } = props ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersControllerSession>>> = ({ signal }) =>
-    usersControllerSession(signal);
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof usersControllerSession>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type UsersControllerSessionQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerSession>>
->;
-export type UsersControllerSessionQueryError = unknown;
-
-export function useUsersControllerSession<
-  TData = Awaited<ReturnType<typeof usersControllerSession>>,
-  TError = unknown
->(options: {
-  query: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>
-  > &
-    Pick<
-      DefinedInitialDataOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>,
-      'initialData'
-    >;
-}): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUsersControllerSession<
-  TData = Awaited<ReturnType<typeof usersControllerSession>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>
-  > &
-    Pick<
-      UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof usersControllerSession>>,
-        TError,
-        TData
-      >,
-      'initialData'
-    >;
-}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useUsersControllerSession<
-  TData = Awaited<ReturnType<typeof usersControllerSession>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-/**
- * @summary получить сессию пользователя
- */
-
-export function useUsersControllerSession<
-  TData = Awaited<ReturnType<typeof usersControllerSession>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof usersControllerSession>>, TError, TData>
-  >;
-}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getUsersControllerSessionQueryOptions(options);
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
+    return testerControllerCreateOtp(data);
   };
 
-  query.queryKey = queryOptions.queryKey;
+  return { mutationFn, ...mutationOptions } as UseMutationOptions<
+    TData,
+    TError,
+    { data: CreateOtpDto },
+    TContext
+  >;
+};
 
-  return query;
-}
+export type TesterControllerCreateOtpMutationResult = NonNullable<
+  Awaited<ReturnType<typeof testerControllerCreateOtp>>
+>;
+export type TesterControllerCreateOtpMutationBody = CreateOtpDto;
+export type TesterControllerCreateOtpMutationError = unknown;
+
+/**
+ * @summary создание отп кода
+ */
+export const useTesterControllerCreateOtp = <
+  TData = Awaited<ReturnType<typeof testerControllerCreateOtp>>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<TData, TError, { data: CreateOtpDto }, TContext>;
+}): UseMutationResult<TData, TError, { data: CreateOtpDto }, TContext> => {
+  const mutationOptions = getTesterControllerCreateOtpMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary авторизация
+ */
+export const testerControllerSignin = (signInDto: SignInDto, signal?: AbortSignal) => {
+  return instance<SignInResponse>({
+    url: `/api/tester/signin`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: signInDto,
+    signal
+  });
+};
+
+export const getTesterControllerSigninMutationOptions = <
+  TData = Awaited<ReturnType<typeof testerControllerSignin>>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<TData, TError, { data: SignInDto }, TContext>;
+}) => {
+  const mutationKey = ['testerControllerSignin'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof testerControllerSignin>>,
+    { data: SignInDto }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return testerControllerSignin(data);
+  };
+
+  return { mutationFn, ...mutationOptions } as UseMutationOptions<
+    TData,
+    TError,
+    { data: SignInDto },
+    TContext
+  >;
+};
+
+export type TesterControllerSigninMutationResult = NonNullable<
+  Awaited<ReturnType<typeof testerControllerSignin>>
+>;
+export type TesterControllerSigninMutationBody = SignInDto;
+export type TesterControllerSigninMutationError = unknown;
+
+/**
+ * @summary авторизация
+ */
+export const useTesterControllerSignin = <
+  TData = Awaited<ReturnType<typeof testerControllerSignin>>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<TData, TError, { data: SignInDto }, TContext>;
+}): UseMutationResult<TData, TError, { data: SignInDto }, TContext> => {
+  const mutationOptions = getTesterControllerSigninMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
