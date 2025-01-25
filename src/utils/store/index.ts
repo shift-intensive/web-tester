@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
-import type { User } from '@/api/instance';
+import type { User } from '@/api';
 
 interface StoreState {
   isLoggedIn: boolean;
@@ -18,3 +18,27 @@ export const useStore = create<StoreState>()(
     setUser: (user) => set({ user })
   }))
 );
+
+type Theme = 'dark' | 'light';
+
+interface ThemeState {
+  value: Theme;
+  set: (value: Theme) => void;
+}
+
+export const useTheme = create<ThemeState>()(
+  persist(
+    (set) => ({
+      value: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+      set: (value) => {
+        document.documentElement.classList.toggle('dark', value === 'dark');
+        set({ value });
+      }
+    }),
+    {
+      name: 'theme-storage',
+      storage: createJSONStorage(() => sessionStorage)
+    }
+  )
+);
+document.documentElement.classList.toggle('dark', useTheme.getState().value === 'dark');

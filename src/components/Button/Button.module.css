@@ -1,7 +1,6 @@
 .button {
   width: 100%;
   min-width: max-content;
-  height: 56px;
   padding: 16px 32px;
   border: 1px solid;
   border-radius: 16px;
@@ -17,33 +16,33 @@
 }
 
 .contained {
-  border-color: var(--background-brand);
-  background-color: var(--background-brand);
+  border-color: var(--bg-brand);
+  background-color: var(--bg-brand);
   color: var(--text-invert);
 
   &:hover {
-    border-color: var(--background-hover-primary);
-    background-color: var(--background-hover-primary);
+    border-color: var(--bg-hover-primary);
+    background-color: var(--bg-hover-primary);
   }
 
   &:focus {
     border: 1px solid;
-    border-color: var(--background-brand-extraLight);
+    border-color: var(--bg-brand-extraLight);
   }
 
   &:disabled:not(.loading) {
-    border-color: var(--background-brand-extraLight);
-    background-color: var(--background-brand-extraLight);
+    border-color: var(--bg-brand-extraLight);
+    background-color: var(--bg-brand-extraLight);
   }
 }
 
 .text {
   border: none;
-  background-color: var(--background-brand);
+  background-color: var(--bg-brand);
   color: var(--text-secondary);
 
   &:hover {
-    background-color: var(--background-tertiary);
+    background-color: var(--bg-tertiary);
   }
 
   &:disabled:not(.loading) {
@@ -57,7 +56,7 @@
   color: var(--text-secondary);
 
   &:hover {
-    background-color: var(--background-tertiary);
+    background-color: var(--bg-tertiary);
   }
 
   &:disabled:not(.loading) {
@@ -66,7 +65,25 @@
   }
 
   &.loading:before {
-    border-top-color: var(--background-brand);
+    border-top-color: var(--bg-brand);
+  }
+}
+
+.link {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-decoration: underline;
+
+  &:disabled:not(.loading) {
+    border-color: var(--border-extraLight);
+    color: var(--text-tertiary);
+  }
+
+  &.loading:before {
+    border-top-color: var(--bg-brand);
   }
 }
 

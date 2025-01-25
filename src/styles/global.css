@@ -8,54 +8,54 @@
   line-height: 1.5;
   text-rendering: optimizelegibility;
 
-  --background-brand: #1975ff;
-  --background-primary: #fff;
-  --background-hover-primary: #0052cc;
-  --background-brand-extraLight: #cce0ff;
-  --background-disabled: #f3f4f6;
-  --background-tertiary: #f9fafb;
-  --border-light: #ced2da;
-  --border-extraLight: #e3e5e5;
-  --indicator-error: #f64c4c;
-  --text-invert: #fff;
-  --text-error: #f64c4c;
-  --text-primary: #000;
+  --bg-brand: #1975ff;
+  --bg-brand-primary: #f0f6ff;
+  --bg-hover-primary: #0052cc;
+  --indicator-white: #fff;
+  --bg-tertiary: #f9fafb;
+  --bg-brand-extraLight: #cce0ff;
+  --bg-primary: #fff;
+  --bg-disable: #f3f4f6;
+  --text-brand: #1975ff;
+  --text-primary: #141c24;
   --text-secondary: #344051;
   --text-tertiary: #637083;
-  --text-quartenery: #97a1af;
+  --text-quaternary: #637083;
+  --text-disable: #97a1af;
+  --text-invert: #fff;
+  --border-light: #ced2da;
+  --indicator-medium: #97a1af;
+  --indicator-error: #f64c4c;
+  --indicator-focused: #4c94ff;
 }
 
 .dark {
-  --background-brand: #1975ff;
-  --background-primary: #212124;
-  --background-hover-primary: #0052cc;
-  --background-brand-extraLight: #cce0ff;
-  --background-disabled: #363a42;
-  --background-tertiary: #f9fafb;
-  --border-light: #838383;
-  --border-extraLight: #e3e5e5;
-  --indicator-error: #f64c4c;
-  --text-invert: #fff;
-  --text-error: #f64c4c;
+  color-scheme: dark;
+
+  --bg-tertiary: #404040;
+  --bg-brand-extraLight: #5f98ed;
+  --bg-primary: #151e2a;
+  --bg-disable: #353b40;
   --text-primary: #fff;
-  --text-secondary: #a1a5aa;
-  --text-tertiary: #73787f;
-  --text-quartenery: #55595f;
+  --text-secondary: #97a1af;
+  --text-tertiary: #637083;
+  --text-quaternary: #545d6b;
+  --text-disable: #344051;
+  --text-invert: #fff;
+  --border-light: #637083;
+  --indicator-medium: #637083;
+  --indicator-error: #f64c4c;
+  --indicator-focused: #4c94ff;
 }
 
 body {
+  position: relative;
   display: flex;
-  min-width: 320px;
+  max-width: 1280px;
   min-height: 100vh;
-  margin: 0;
-  background-color: var(--background-primary);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   place-items: center;
-}
-
-.container {
-  max-width: 1170px;
-  margin: auto;
 }
 
 #root {
@@ -63,4 +63,17 @@ body {
   padding: 2rem;
   margin: 0 auto;
   text-align: center;
+}
+
+.container {
+  max-width: 1170px;
+  margin: auto;
+}
+
+.theme_switcher {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  color: var(--indicator-medium);
+  cursor: pointer;
 }

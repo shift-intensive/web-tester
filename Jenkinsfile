@@ -2,9 +2,10 @@ pipeline {
     agent any
     environment {
         GITHUB_TOKEN=credentials('github-container')
+        IP=credentials('yandex-apps-ip')
+
         IMAGE_NAME='shift-intensive/web-tester'
         IMAGE_VERSION='latest'
-        IP='51.250.122.249'
         PORT='3004'
     }
     stages {

@@ -26,8 +26,8 @@ export const Countdown = ({ endTime, onRetry, loading = false }: CountdownProps)
 
   if (!seconds)
     return (
-      <Button variant='text' loading={loading} onClick={onRetry}>
-        Запросить код ещё раз
+      <Button className={styles.button} variant='link' loading={loading} onClick={onRetry}>
+        Отправить еще раз
       </Button>
     );
 

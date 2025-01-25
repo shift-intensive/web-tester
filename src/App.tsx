@@ -1,12 +1,18 @@
+import { MoonIcon, SunIcon } from 'lucide-react';
+
 import { AuthView } from './modules/auth/view';
 import { ProfileView } from './modules/profile/view';
-import { useStore } from './utils/store';
+import { useStore, useTheme } from './utils/store';
 
 export const App = () => {
+  const theme = useTheme((state) => state.value);
   const isLoggedIn = useStore((state) => state.isLoggedIn);
 
   return (
     <main className='container'>
+      <div className='theme_switcher' onClick={() => useTheme.getState().set(theme && theme === 'light' ? 'dark' : 'light')}>
+        {theme && theme === 'light' ? <MoonIcon /> : <SunIcon />}
+      </div>
       {!isLoggedIn && <AuthView />}
       {isLoggedIn && <ProfileView />}
     </main>

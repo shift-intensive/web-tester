@@ -1,4 +1,6 @@
-/* eslint-disable siberiacancode-react/display-name */
+
+import type { JSX } from 'react';
+
 import clsx from 'clsx';
 import React from 'react';
 
@@ -12,10 +14,9 @@ type InputProps<
   component?: Component;
 } & React.ComponentProps<Component>;
 
-export const Input = React.forwardRef(
-  (
-    { label, className, component, error, id: externalId, ...props }: InputProps<'input'>,
-    ref: React.ForwardedRef<HTMLInputElement>
+export const Input =
+  ((
+    { label, className, component, error, id: externalId, ...props }
   ) => {
     const internalId = React.useId();
     const id = externalId ?? internalId;
@@ -32,13 +33,14 @@ export const Input = React.forwardRef(
         <Component
           className={clsx(styles.input, 'paragraph16_regular', className)}
           {...props}
-          ref={ref}
           id={id}
         />
         {error && <p className={clsx('paragraph14_regular')}>{error}</p>}
       </div>
     );
-  }
-) as <Component extends React.JSXElementConstructor<any> | keyof JSX.IntrinsicElements = 'input'>(
-  props: InputProps<Component> & { ref?: React.ForwardedRef<HTMLInputElement> }
-) => React.ReactElement;
+  }) as <Component extends React.JSXElementConstructor<any> | keyof JSX.IntrinsicElements = 'input'>(
+    props: InputProps<Component> & { ref?: React.ForwardedRef<HTMLInputElement> }
+  ) => React.ReactElement;
+
+
+

@@ -1,3 +1,8 @@
 .text {
-  color: var(--text-quartenery);
+  color: var(--text-quaternary);
+  text-align: left;
+}
+
+.button {
+  text-align: left;
 }
