@@ -1,10 +1,17 @@
 .container {
   display: flex;
-  width: 920px;
+  width: 100%;
   flex-direction: column;
   justify-content: start;
   gap: 24px;
   text-align: start;
+}
+
+@media screen and (width >= 768px) {
+
+  .container {
+    width: 920px;
+  }
 }
 
 .fieldset {
@@ -15,8 +22,15 @@
 
 .button_container {
   display: flex;
-  width: 50%;
-  flex-direction: row-reverse;
+  flex-direction: column;
   margin-top: 40px;
   gap: 24px;
+}
+
+@media screen and (width >= 768px) {
+
+  .button_container {
+    width: 50%;
+    flex-direction: row;
+  }
 }

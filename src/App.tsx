@@ -10,11 +10,16 @@ export const App = () => {
 
   return (
     <main className='container'>
-      <div className='theme_switcher' onClick={() => useTheme.getState().set(theme && theme === 'light' ? 'dark' : 'light')}>
-        {theme && theme === 'light' ? <MoonIcon /> : <SunIcon />}
+      <header>
+        <div className='theme_switcher' onClick={() => useTheme.getState().set(theme && theme === 'light' ? 'dark' : 'light')}>
+          {theme && theme === 'light' ? <MoonIcon /> : <SunIcon />}
+        </div>
+      </header>
+
+      <div className='content'>
+        {!isLoggedIn && <AuthView />}
+        {isLoggedIn && <ProfileView />}
       </div>
-      {!isLoggedIn && <AuthView />}
-      {isLoggedIn && <ProfileView />}
     </main>
   );
 };

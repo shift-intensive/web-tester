@@ -23,9 +23,12 @@ export const AuthView = () => {
           <br /> в личный кабинет
         </Typography>
 
+
+
         <Controller
           render={({ field: { onChange, value, ...restField }, fieldState }) => (
             <Input
+              label=' Телефон'
               {...restField}
               value={value.substring(1)}
               component={PatternFormat}
@@ -40,14 +43,16 @@ export const AuthView = () => {
           control={form.control}
         />
 
+
         {state.stage === 'otp' && (
           <Controller
             render={({ field, fieldState }) => (
               <Input
+                label='Проверочный код'
                 {...field}
                 component={PatternFormat}
                 format='#######'
-                placeholder='Проверочный код'
+                placeholder='Введите код'
                 {...(fieldState.error && { error: fieldState.error.message })}
               />
             )}

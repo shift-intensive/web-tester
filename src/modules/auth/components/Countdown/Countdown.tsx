@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { useCountdown } from '@/utils/hooks';
+import { useTimer } from '@siberiacancode/reactuse';
 
 import { Button } from '../../../../components/Button/Button';
 import { Typography } from '../../../../components/Typography/Typography';
@@ -14,15 +12,8 @@ interface CountdownProps {
 }
 
 export const Countdown = ({ endTime, onRetry, loading = false }: CountdownProps) => {
-  const [seconds, { startCountdown }] = useCountdown({
-    countStart: Math.floor((endTime - Date.now()) / 1000),
-    interval: 1000,
-    enabled: false
-  });
-
-  React.useEffect(() => {
-    startCountdown();
-  }, [endTime]);
+  const timer = useTimer(Math.floor((endTime - Date.now())));
+  const seconds = timer.seconds + timer.minutes * 60;
 
   if (!seconds)
     return (

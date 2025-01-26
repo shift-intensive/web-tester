@@ -12,7 +12,7 @@ import type { ProfileFormScheme } from '../constants';
 import { profileFormScheme } from '../constants';
 
 export const useView = () => {
-  const { user } = useStore();
+  const { user, setUser } = useStore();
 
   const testerControllerUpdateProfile = useTesterControllerUpdateProfile();
 
@@ -26,6 +26,8 @@ export const useView = () => {
     await testerControllerUpdateProfile.mutateAsync({
       data: { phone: user.phone, profile: values }
     });
+    const updatedUser = { ...user, ...values };
+    setUser(updatedUser);
   });
 
   const onLogout = () => {
